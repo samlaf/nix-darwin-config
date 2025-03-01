@@ -1,12 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.services.stretch-reminder;
-in {
+in
+{
   # Declare configurable options for the stretch reminder service
   options.services.stretch-reminder = {
     enable = mkEnableOption "Stretch reminder service";
-    
+
     intervalMinutes = mkOption {
       type = types.int;
       default = 30;
@@ -24,7 +30,7 @@ in {
 
       serviceConfig = {
         Label = "org.nixos.stretch-reminder";
-        StartInterval = cfg.intervalMinutes * 60;  # Convert minutes to seconds
+        StartInterval = cfg.intervalMinutes * 60; # Convert minutes to seconds
         RunAtLoad = true;
         KeepAlive = false;
         StandardErrorPath = "/tmp/stretch-reminder-error.log";
